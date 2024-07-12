@@ -15,6 +15,8 @@ import '../libs/maplibre-rtl'
 import MaplibreGeocoder from '@maplibre/maplibre-gl-geocoder';
 import '@maplibre/maplibre-gl-geocoder/dist/maplibre-gl-geocoder.css';
 
+import { Protocol } from "pmtiles";
+
 function renderPopup(popup: JSX.Element, mountNode: ReactDOM.Container): HTMLElement {
   ReactDOM.render(popup, mountNode);
   return mountNode as HTMLElement;
@@ -140,6 +142,9 @@ export default class MapMaplibreGl extends React.Component<MapMaplibreGlProps, M
     } satisfies MapOptions;
 
     const map = new MapLibreGl.Map(mapOpts);
+
+    const protocol = new Protocol();
+    MapLibreGl.addProtocol("pmtiles", protocol.tile);
 
     const mapViewChange = () => {
       const center = map.getCenter();
@@ -270,4 +275,3 @@ export default class MapMaplibreGl extends React.Component<MapMaplibreGlProps, M
     ></div>
   }
 }
-
